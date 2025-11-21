@@ -1,14 +1,17 @@
 import { View, Text, StyleSheet } from 'react-native';
-import { useContext } from 'react';
-import { FavoritesContext } from '../store/context/favorites-context';
+// import { useContext } from 'react';
+// import { FavoritesContext } from '../store/context/favorites-context';
+import { useSelector } from 'react-redux';
+
 import MealList from '../components/MealList/MealList';
 import { MEALS } from '../data/dummy-data';
 
 export default function FavoritesScreen() {
-    const FavoritesMealContext = useContext(FavoritesContext);
-    const ids = FavoritesMealContext.ids;
+    // const FavoritesMealContext = useContext(FavoritesContext);
+    // const favoriteMealIds = FavoritesMealContext.ids;
+    const favoriteMealIds = useSelector((state) => state.favoriteMeals.ids);
 
-    if (ids.length === 0) {
+    if (favoriteMealIds.length === 0) {
         return (
             <View style={styles.MessageContainer}>
                 <Text style={styles.MessageText}>No favorite meals found. Start adding some!</Text>
@@ -16,7 +19,7 @@ export default function FavoritesScreen() {
         );
     }
 
-    const displayedMeals = MEALS.filter((meal) => ids.includes(meal.id));
+    const displayedMeals = MEALS.filter((meal) => favoriteMealIds.includes(meal.id));
     console.log(displayedMeals);
 
 
